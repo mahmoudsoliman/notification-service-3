@@ -1,5 +1,5 @@
 var amqp = require('amqplib/callback_api');
-var url = process.env.AMQP_URL || 'amqp://guest:guest@localhost:32785';
+var url = process.env.AMQP_URL || 'amqp://guest:guest@localhost:32793';
 module.exports = createQueueChannel;
 function createQueueChannel(queue, cb) {  
   amqp.connect(url, onceConnected);

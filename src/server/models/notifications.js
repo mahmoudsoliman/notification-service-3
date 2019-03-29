@@ -8,13 +8,9 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    NotificationTypeId: {
-      type: DataTypes.INTEGER(11),
+    NotificationType: {
+      type: DataTypes.STRING(50),
       allowNull: false,
-      references: {
-        model: 'notificationtypes',
-        key: 'notificationtypeid'
-      }
     },
     Recipient: {
       type: DataTypes.STRING(100),
@@ -34,14 +30,6 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'notificationstatus',
         key: 'notificationstatusid'
-      }
-    },
-    NotificationCategoryId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'notificationcategories',
-        key: 'notificationcategoryid'
       }
     }
   }, {
