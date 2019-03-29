@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "root",
+    "password": "123456",
+    "database": "notifications",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define":{
+      "timestamps": false
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "123456",
+    "database": "notifications",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define":{
+      "timestamps": false
+    }
+  },
+  "production": {
+    "username": "root",
+    "password": "123456",
+    "database": "notifications",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define":{
+      "timestamps": false
+    }
+  }
+}
