@@ -8,11 +8,11 @@ Channel(queue, function(err, channel, conn) {
     console.log('channel and queue created');
     var notification = {
         TemplateKey: 'WELMSG',
-        Recipient: '01008062008',
+        Recipient: '01000000000',
         NotificationType: 'SMS',
         Language: 'ar',
         MessageDetails: {
-            name: 'سولي',
+            name: 'test-name',
             number_of_cities: 10
         }
     };
