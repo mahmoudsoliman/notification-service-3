@@ -9,11 +9,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     NotificationTemplateKey: {
       type: DataTypes.STRING(45),
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
     Template: {
       type: DataTypes.STRING(250),
+      allowNull: false
+    },
+    Language:{
+      type: DataTypes.STRING(45),
       allowNull: false
     }
   }, {

@@ -23,9 +23,22 @@ Channel(queue, function(err, channel, conn) {
           let jsonMsg = JSON.parse(msg.content.toString());
           ((jsonMsg) => {
             console.log(jsonMsg);
+            //validate content
+            var isValid = ((msg) => {
+              //validate language
+              var isValidLanguage = msg.Language.toLowerCase() == 'ar' || msg.Language.toLowerCase() == 'en';
+              var isValidType = msg.NotificationType.toUpperCase() == 'SMS' || msg.NotificationType.toUpperCase() == 'PUSH';
+              return isValidLanguage && isValidType;
+            })(jsonMsg)
+            if(!isValid)
+            {
+              console.log('Invalid Content');
+              return;
+            }
             NotificationTemplate.findOne({
               where: {
-                NotificationTemplateKey: jsonMsg.TemplateKey
+                NotificationTemplateKey: jsonMsg.TemplateKey.toUpperCase(),
+                Language: jsonMsg.Language.toLowerCase()
               }
             }).then(notificationTemplate => {
               if(notificationTemplate == null)
@@ -41,7 +54,7 @@ Channel(queue, function(err, channel, conn) {
                 fetch('http://localhost:8000/api/notification', {
                   method: "POST",
                   body: JSON.stringify({
-                    NotificationType: jsonMsg.NotificationType,
+                    NotificationType: jsonMsg.NotificationType.toUpperCase(),
                     Recipient: jsonMsg.Recipient,
                     NotificationBody: messageToBeSent
                   }),

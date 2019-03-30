@@ -10,8 +10,9 @@ Channel(queue, function(err, channel, conn) {
         TemplateKey: 'WELMSG',
         Recipient: '01008062008',
         NotificationType: 'SMS',
+        Language: 'ar',
         MessageDetails: {
-            name: 'Soli',
+            name: 'سولي',
             number_of_cities: 10
         }
     };
