@@ -1,7 +1,8 @@
 const Notification = require('../models').Notification;
 module.exports = {
     send(req, res){
-        return Notification.create({
+        console.log('controller' + req.body);
+        Notification.create({
             NotificationType: req.body.NotificationType,
             Recipient: req.body.Recipient,
             NotificationBody: req.body.NotificationBody,

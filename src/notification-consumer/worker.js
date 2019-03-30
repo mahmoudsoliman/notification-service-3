@@ -1,4 +1,5 @@
 var Channel = require('./channel');
+const fetch = require('node-fetch');
 var NotificationTemplate = require('../server/models').NotificationTemplate;
 var queue = 'notifications';
 Channel(queue, function(err, channel, conn) {  
@@ -19,10 +20,12 @@ Channel(queue, function(err, channel, conn) {
         console.log('consuming %j', msg.content.toString());
         setTimeout(function() {
           channel.ack(msg);
-          let messageAfterProcessing = ((msg) => {
+          let jsonMsg = JSON.parse(msg.content.toString());
+          ((jsonMsg) => {
+            console.log(jsonMsg);
             NotificationTemplate.findOne({
               where: {
-                TemplateKey: msg.templateKey
+                NotificationTemplateKey: jsonMsg.TemplateKey
               }
             }).then(notificationTemplate => {
               if(notificationTemplate == null)
@@ -30,15 +33,20 @@ Channel(queue, function(err, channel, conn) {
               else
               {
                 messageToBeSent = notificationTemplate.Template;
-                msg.MessageDetails.forEach((key, value) => {
-                  messageToBeSent.replace(key, value);
+                Object.keys(jsonMsg.MessageDetails).forEach((key) => {
+                  console.log(key, jsonMsg.MessageDetails[key]);
+                  messageToBeSent = messageToBeSent.replace(`{${key}}`, jsonMsg.MessageDetails[key]);
                 });
+                console.log(messageToBeSent);
                 fetch('http://localhost:8000/api/notification', {
                   method: "POST",
-                  body: {
-                    NotificationType: msg.NotificationType,
-                    Recipient: msg.Recipient,
-                    NotificationBody: msg.NotificationBody
+                  body: JSON.stringify({
+                    NotificationType: jsonMsg.NotificationType,
+                    Recipient: jsonMsg.Recipient,
+                    NotificationBody: messageToBeSent
+                  }),
+                  headers: {
+                    "Content-Type": "application/json"
                   }
                 })
                 .then(response => response.json())
@@ -50,7 +58,7 @@ Channel(queue, function(err, channel, conn) {
                 });
               }
             })
-          })(msg);
+          })(jsonMsg);
           consume();
         }, 1e3);
       }

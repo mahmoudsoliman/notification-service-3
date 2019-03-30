@@ -23,14 +23,6 @@ module.exports = function(sequelize, DataTypes) {
     SendDate: {
       type: DataTypes.DATE,
       allowNull: false
-    },
-    StatusId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'notificationstatus',
-        key: 'notificationstatusid'
-      }
     }
   }, {
     tableName: 'notifications'

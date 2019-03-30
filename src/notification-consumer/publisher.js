@@ -9,7 +9,7 @@ Channel(queue, function(err, channel, conn) {
     var notification = {
         TemplateKey: 'WELMSG',
         Recipient: '01008062008',
-        MessageType: 'SMS',
+        NotificationType: 'SMS',
         MessageDetails: {
             name: 'Soli',
             number_of_cities: 10
@@ -18,14 +18,16 @@ Channel(queue, function(err, channel, conn) {
     var sent = channel.sendToQueue(queue, encode(notification), {
       persistent: true
     });
-    console.log(sent);
-    setImmediate(function() {
+    setTimeout(function() {
       channel.close();
       conn.close();
-    });
+      console.log(sent);
+    }, 500);
   }
 });
 
 function encode(doc) {  
-    return new Buffer.from(JSON.stringify(doc));
+    var jsonString = JSON.stringify(doc);
+    console.log(jsonString);
+    return new Buffer.from(jsonString);
 }
