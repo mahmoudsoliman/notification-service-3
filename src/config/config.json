@@ -3,7 +3,7 @@
     "username": "root",
     "password": "123456",
     "database": "notifications",
-    "host": "127.0.0.1",
+    "host": "mysql",
     "dialect": "mysql",
     "define":{
       "timestamps": false
@@ -13,8 +13,11 @@
     "username": "root",
     "password": "123456",
     "database": "notifications",
-    "host": "127.0.0.1",
+    "host": "mysql",
     "dialect": "mysql",
+    "dialectOptions": {
+      "insecureAuth": true
+    },
     "define":{
       "timestamps": false
     }
@@ -23,8 +26,11 @@
     "username": "root",
     "password": "123456",
     "database": "notifications",
-    "host": "127.0.0.1",
+    "host": "mysql",
     "dialect": "mysql",
+    "dialectOptions": {
+      "insecureAuth": true
+    },
     "define":{
       "timestamps": false
     }
